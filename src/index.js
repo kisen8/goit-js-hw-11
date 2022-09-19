@@ -1,6 +1,5 @@
 import GalleryApiService from './js/api-servise';
 import { Notify } from 'notiflix';
-import axios from 'axios';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import LoadMoreBtn from './js/load-more-button';
@@ -10,7 +9,7 @@ import LoadMoreBtn from './js/load-more-button';
 const refs = {
   galleryWrap: document.querySelector('.gallery'),
   form: document.querySelector('#search-form'),
-  // loadMoreBtn: document.querySelector('.load-more'),
+  loadMoreBtn: document.querySelector('.load-more'),
   endText: document.querySelector('.end__text'),
   btn_anchor: document.querySelector('.button-anchor'),
 };
@@ -26,7 +25,9 @@ let lightbox = {};
 console.log(loadMoreBtn);
 
 refs.form.addEventListener('submit', onSearch);
-loadMoreBtn.refs.btn.addEventListener('click', onLoadMore);
+if (loadMoreBtn.refs.btn) {
+  loadMoreBtn.refs.btn.addEventListener('click', onLoadMore);
+}
 
 async function onSearch(e) {
   e.preventDefault();
@@ -49,7 +50,7 @@ async function onSearch(e) {
 
   loadMoreBtn.hide();
 
-  refs.endText.classList.add('is-hidden');
+  if (refs.endText) refs.endText.classList.add('is-hidden');
 
   galleryApiService.resetPage();
 
@@ -73,14 +74,14 @@ function onSubmitControl(filesFromBackEnd) {
       `Hooray! We found ${filesFromBackEnd.data.total} images, but we can only show the first ${filesFromBackEnd.data.totalHits}!`
     );
     loadMoreBtn.show();
-    refs.btn_anchor.classList.remove('is-hidden');
+    // refs.btn_anchor.classList.remove('is-hidden');
   } else if (
     filesFromBackEnd.data.total > 40 &&
     filesFromBackEnd.data.total <= 500
   ) {
     Notify.success(`Hooray! We found ${filesFromBackEnd.data.total} images!`);
     loadMoreBtn.show();
-    refs.btn_anchor.classList.remove('is-hidden');
+    // refs.btn_anchor.classList.remove('is-hidden');
     refs.endText.classList.add('is-hidden');
   } else if (
     filesFromBackEnd.data.totalHits > 0 &&
