@@ -11,10 +11,10 @@ const refs = {
   form: document.querySelector('#search-form'),
   loadMoreBtn: document.querySelector('.load-more'),
   endText: document.querySelector('.end__text'),
-  btn_anchor: document.querySelector('.button-anchor'),
+  // btn_anchor: document.querySelector('.button-anchor'),
 };
 
-console.log(refs.btn_anchor);
+// console.log(refs.btn_anchor);
 const loadMoreBtn = new LoadMoreBtn({
   cls: '.load-more',
   hidden: true,
@@ -22,7 +22,7 @@ const loadMoreBtn = new LoadMoreBtn({
 const galleryApiService = new GalleryApiService();
 let lightbox = {};
 
-console.log(loadMoreBtn);
+// console.log(loadMoreBtn);
 
 refs.form.addEventListener('submit', onSearch);
 if (loadMoreBtn.refs.btn) {
@@ -36,7 +36,7 @@ async function onSearch(e) {
   galleryApiService.searchQuery =
     e.currentTarget.elements.searchQuery.value.trim();
 
-  console.log(galleryApiService.searchQuery);
+  // console.log(galleryApiService.searchQuery);
 
   if (!galleryApiService.searchQuery) {
     clearGalleryMarkup();
@@ -44,7 +44,7 @@ async function onSearch(e) {
     loadMoreBtn.hide();
     refs.endText.classList.add('is-hidden');
     refs.form.reset();
-    refs.btn_anchor.classList.add('is-hidden');
+    // refs.btn_anchor.classList.add('is-hidden');
     return;
   }
 
@@ -101,7 +101,7 @@ function onSubmitControl(filesFromBackEnd) {
 }
 
 function createGalleryMarkup(cards) {
-  console.log(cards);
+  // console.log(cards);
   refs.galleryWrap.insertAdjacentHTML(
     'beforeend',
     cards
@@ -145,7 +145,7 @@ function clearGalleryMarkup() {
 async function onLoadMore() {
   const filesFromBackEnd = await galleryApiService.fetchGallery();
   createGalleryMarkup(filesFromBackEnd.data.hits);
-  console.log(filesFromBackEnd.data.hits);
+  // console.log(filesFromBackEnd.data.hits);
   if (
     filesFromBackEnd.data.hits.length >= 0 &&
     filesFromBackEnd.data.hits.length < 40
